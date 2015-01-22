@@ -50,11 +50,10 @@ POS_RX = re.compile('^\((-?\d+),(-?\d+)\)$')
 INTERVAL = 0.01
 
 ST_LENGTH = 20
-ST_STDDEV_THRESHOLD = 3
+ST_STDDEV_THRESHOLD = 9
 ST_THRESHOLD = 10
-
-LT_LENGTH = 6
-LT_STDDEV_THRESHOLD = 3
+LT_LENGTH = 10
+LT_STDDEV_THRESHOLD = 9
 
 workspaces = None
 current_ws = None
@@ -117,7 +116,7 @@ def loop():
     # If long-term stable
     if stddev(lt) < LT_STDDEV_THRESHOLD:
       if lt_stable == False:
-	print "Stable"
+	#print "Stable"
 	lt_stable = True
 	
       # Split st array into older and newer values
@@ -134,9 +133,9 @@ def loop():
 
       # If short-term stable
       st_mean = mean(st)
-      print "Max: " + str(max(old)) + " > " + str(st_mean + ST_THRESHOLD) + \
+      """print "Max: " + str(max(old)) + " > " + str(st_mean + ST_THRESHOLD) + \
             " Min: " + str(min(old)) + " < " + str(st_mean - ST_THRESHOLD) + \
-	    " SD: " + str(stddev(new)) + " < " + str(ST_STDDEV_THRESHOLD)
+	    " SD: " + str(stddev(new)) + " < " + str(ST_STDDEV_THRESHOLD)"""
       if stddev(new) < ST_STDDEV_THRESHOLD:
         # Scan slightly older data for high over threshold and low under it
 	st_mean = mean(st)
@@ -158,7 +157,7 @@ def loop():
 	  lt[(lt_idx + LT_LENGTH - 1) % LT_LENGTH] = 10000000;
     else:
       if lt_stable == True:
-        print "Unstable"
+        #print "Unstable"
 	lt_stable = False
       
     st_idx = st_idx + 1
@@ -171,7 +170,7 @@ def loop():
       lt[lt_idx] = st[st_idx]
       lt_idx = lt_idx + 1
       lt_idx %= LT_LENGTH
-      print "Stability stddev: " + str(stddev(lt))
+      #print "Stability stddev: " + str(stddev(lt))
 
     time.sleep(INTERVAL)
 
