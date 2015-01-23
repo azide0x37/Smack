@@ -155,7 +155,7 @@ def loop():
             switch_to_workspace_at_left()
 
 	  # No further smacks for a while; bias long-term stddev
-	  lt[(lt_idx + LT_LENGTH - 1) % LT_LENGTH] = 10000000;
+	  lt[(lt_idx + LT_LENGTH - 1) % LT_LENGTH] = 1000000;
     else:
       if lt_stable == True:
         print "Unstable"
